@@ -25,8 +25,6 @@ console_handler.setFormatter(logFormatter)
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
-logger.warning("helo")
-
 if not capture.isOpened():
     logger.error("Unable to open camera")
 
