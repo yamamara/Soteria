@@ -37,6 +37,8 @@ while True:
     if not frame_available:
         break
 
+    frame = cv2.flip(frame, 1)
+
     # Instantiates camera window and updates frame data
     cv2.imshow("Webcam", frame)
 
