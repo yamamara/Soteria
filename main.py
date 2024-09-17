@@ -1,7 +1,6 @@
 import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
-
 import cv2
 
 # Main camera hardware instance
@@ -34,6 +33,7 @@ while True:
     if not frame_available:
         break
 
+    cv2.flip(frame, 1)
     cv2.imshow("Webcam", frame)
 
     # Captures keyboard input
