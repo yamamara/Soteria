@@ -4,10 +4,9 @@ from logging.handlers import TimedRotatingFileHandler
 
 import cv2
 
-# Main camera variable
+# Main camera hardware instance
 capture = cv2.VideoCapture(0)
 
-# Initializes and formats logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logFormatter = logging.Formatter("[%(asctime)s] [%(levelname)s/%(name)s] %(message)s")
@@ -15,6 +14,7 @@ logFormatter = logging.Formatter("[%(asctime)s] [%(levelname)s/%(name)s] %(messa
 if not os.path.exists("log"):
     os.makedirs("log")
 
+# Makes new log file at midnight
 file_handler = TimedRotatingFileHandler("log/soteria.log", when="midnight", interval=1, backupCount=30)
 file_handler.suffix = "%m-%d-%Y"
 file_handler.setFormatter(logFormatter)
@@ -31,13 +31,11 @@ if not capture.isOpened():
     logger.error("Unable to open camera")
 
 while True:
-    # Reads the current frame from the camera as a tuple
     frame_available, frame = capture.read()
 
     if not frame_available:
         break
 
-    # Instantiates camera window and updates frame data
     cv2.imshow("Webcam", frame)
 
     # Captures keyboard input
@@ -47,6 +45,5 @@ while True:
     if key == 27:
         break
 
-# Frees resources after window closed
 capture.release()
 cv2.destroyAllWindows()
