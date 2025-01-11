@@ -7,8 +7,8 @@ import cv2
 from ultralytics import YOLO
 
 start_time = time.time()
-capture = cv2.VideoCapture(0)
-model = YOLO("yolo11x.pt")
+capture = cv2.VideoCapture("/home/artemis/Downloads/Clerk bombarded by 4 gunmen during robbery at SW Houston gas station, video shows 1080.mp4")
+model = YOLO("/home/artemis/Dev/PycharmProjects/soteria (copy)/train3/weights/best.pt")
 logger = logging.getLogger(__name__)
 
 
@@ -45,7 +45,7 @@ def setup_logger():
 
 def predict(chosen_model, image, conf):
     results = chosen_model.predict(image, conf=conf)
-    rectangle_thickness = 2
+    rectangle_thickness = 3
     text_thickness = 1
 
     for result in results:
@@ -54,17 +54,17 @@ def predict(chosen_model, image, conf):
                 image,
                 (int(box.xyxy[0][0]), int(box.xyxy[0][1])),
                 (int(box.xyxy[0][2]), int(box.xyxy[0][3])),
-                (255, 0, 0),
+                (155, 113, 32),
                 rectangle_thickness
             )
 
             cv2.putText(
                 image,
-                f"{result.names[int(box.cls[0])]} - {(float(result.boxes.conf[0]) * 100):.2f}%",
+                f"{result.names[int(box.cls[0])]}",
                 (int(box.xyxy[0][0]), int(box.xyxy[0][1]) - 10),
                 cv2.FONT_HERSHEY_PLAIN,
                 1,
-                (255, 0, 0),
+                (155, 113, 32),
                 text_thickness
             )
 
@@ -94,7 +94,7 @@ def main():
 
     capture.release()
     cv2.destroyAllWindows()
-    # logger.info("Uptime: " + elapsed_time_with_unit())
+    # logger.info(f"Uptime: {elapsed_time_with_unit()}")
 
 
 if __name__ == "__main__":
